@@ -83,7 +83,7 @@ class FirebaseCall {
   const std::shared_ptr<FirebaseHttpClient> http_;
   FirebaseError error_;
   std::string response_;
-  std::shared_ptr<StaticJsonBuffer<FIREBASE_JSONBUFFER_SIZE>> buffer_;
+  std::shared_ptr<StaticJsonDocument<FIREBASE_JSONBUFFER_SIZE>> buffer_;
 };
 
 class FirebaseRequest : public FirebaseCall {

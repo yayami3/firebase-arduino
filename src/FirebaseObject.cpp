@@ -19,7 +19,7 @@
 // We need to make a copy of data here, even though it may be large.
 // It will need to be long lived.
 FirebaseObject::FirebaseObject(const char* data) : data_{data} {
-  buffer_.reset(new StaticJsonBuffer<FIREBASE_JSONBUFFER_SIZE>);
+  buffer_.reset(new StaticJsonDocument<FIREBASE_JSONBUFFER_SIZE>);
   json_ = buffer_.get()->parse(&data_[0]);
   // TODO(proppy): find a way to check decoding error, tricky because
   // ArduinoJson doesn't surface error for variant parsing.

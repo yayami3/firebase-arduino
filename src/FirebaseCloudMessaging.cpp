@@ -16,22 +16,20 @@ FirebaseCloudMessaging::FirebaseCloudMessaging(const std::string& server_key) {
 const FirebaseError FirebaseCloudMessaging::SendMessageToUser(
     const std::string& registration_id,
     const FirebaseCloudMessage& message) {
-  DynamicJsonBuffer buffer;
-  JsonObject& root = buffer.createObject();
+  DynamicJsonDocument root(1024);
   root["to"] = registration_id.c_str();
 
   AddToJson(message, root);
 
-  char payload[root.measureLength() + 1];
-  root.printTo(payload, sizeof(payload));
+  char payload[measureJson(root) + 1];
+  serializeJson(root, payload, sizeof(payload));
   return SendPayload(payload);
 }
 
 const FirebaseError FirebaseCloudMessaging::SendMessageToUsers(
     const std::vector<std::string>& registration_ids,
     const FirebaseCloudMessage& message) {
-  DynamicJsonBuffer buffer;
-  JsonObject& root = buffer.createObject();
+  DynamicJsonDocument root(1024);
   JsonArray& ids = root.createNestedArray("registration_ids");
   for (const std::string& id : registration_ids) {
     ids.add(id.c_str());
@@ -39,8 +37,8 @@ const FirebaseError FirebaseCloudMessaging::SendMessageToUsers(
 
   AddToJson(message, root);
 
-  char payload[root.measureLength() + 1];
-  root.printTo(payload, sizeof(payload));
+  char payload[measureJson(root) + 1];
+  serializeJson(root, payload, sizeof(payload));
   return SendPayload(payload);
 }
 
@@ -50,14 +48,13 @@ const FirebaseError FirebaseCloudMessaging::SendMessageToTopic(
   std::string to("/topics/");
   to += topic;
 
-  DynamicJsonBuffer buffer;
-  JsonObject& root = buffer.createObject();
+  DynamicJsonDocument root(1024);
   root["to"] = to.c_str();
 
   AddToJson(message, root);
 
-  char payload[root.measureLength() + 1];
-  root.printTo(payload, sizeof(payload));
+  char payload[measureJson(root) + 1];
+  serializeJson(root, payload, sizeof(payload));
   return SendPayload(payload);
 }
 

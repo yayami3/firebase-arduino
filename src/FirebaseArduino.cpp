@@ -58,9 +58,9 @@ String FirebaseArduino::pushString(const String& path, const String& value) {
 }
 
 String FirebaseArduino::push(const String& path, const JsonVariant& value) {
-  int size = value.measureLength()+1;
+  int size = measureJson(value)+1;
   char * buf = new char[size];
-  value.printTo(buf, size);
+  serializeJson(value, buf, size);
   initRequest();
   int status = req_.get()->sendRequest(host_, auth_, "POST", path.c_str(), buf);
   error_ = req_.get()->error();
@@ -87,9 +87,9 @@ void FirebaseArduino::setString(const String& path, const String& value) {
 }
 
 void FirebaseArduino::set(const String& path, const JsonVariant& value) {
-  int size = value.measureLength()+1;
+  int size = measureJson(value)+1;
   char* buf= new char[size];
-  value.printTo(buf, size);
+  serializeJson(value, buf, size);
   initRequest();
   req_.get()->sendRequest(host_, auth_, "PUT", path.c_str(), buf);
   error_ = req_.get()->error();
