@@ -30,7 +30,7 @@ const FirebaseError FirebaseCloudMessaging::SendMessageToUsers(
     const std::vector<std::string>& registration_ids,
     const FirebaseCloudMessage& message) {
   DynamicJsonDocument root(1024);
-  JsonArray& ids = root.createNestedArray("registration_ids");
+  JsonArray ids = root.createNestedArray("registration_ids");
   for (const std::string& id : registration_ids) {
     ids.add(id.c_str());
   }
@@ -74,26 +74,26 @@ const FirebaseError FirebaseCloudMessaging::SendPayload(
 }
 
 const void FirebaseCloudMessaging::AddToJson(
-    const FirebaseCloudMessage& message, JsonObject& json) const {
+    const FirebaseCloudMessage& message, DynamicJsonDocument doc) const {
   if (!message.collapse_key.empty()) {
-    json["collapse_key"] = message.collapse_key.c_str();
+    doc["collapse_key"] = message.collapse_key.c_str();
   }
 
-  json["priority"] = message.high_priority ? "high" : "normal";
-  json["delay_while_idle"] = message.delay_while_idle;
+  doc["priority"] = message.high_priority ? "high" : "normal";
+  doc["delay_while_idle"] = message.delay_while_idle;
   if (message.time_to_live > 0 && message.time_to_live < 2419200) {
-    json["time_to_live"] = message.time_to_live;
+    doc["time_to_live"] = message.time_to_live;
   }
 
   if (!message.data.empty()) {
-    JsonObject& data = json.createNestedObject("data");
+    JsonObject data = doc.createNestedObject("data");
     for (const auto& datum : message.data) {
       data[datum.first.c_str()] = datum.second.c_str();
     }
   }
 
   if (!message.notification.title.empty() || !message.notification.body.empty()) {
-    JsonObject& notification = json.createNestedObject("notification");
+    JsonObject notification = doc.createNestedObject("notification");
     if (!message.notification.title.empty()) {
       notification["title"] = message.notification.title.c_str();
     }

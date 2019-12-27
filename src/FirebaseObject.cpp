@@ -68,7 +68,7 @@ String FirebaseObject::getString(const String& path) const {
 
 bool FirebaseObject::isNullString(const String& path) const {
   JsonVariant variant = getJsonVariant(path);
-  return variant.is<const char *>() && variant.asString() == NULL;
+  return variant.is<const char *>() && variant.as<char*>() == NULL;
 }
 
 JsonVariant FirebaseObject::getJsonVariant(const String& path) const {
@@ -88,7 +88,7 @@ JsonVariant FirebaseObject::getJsonVariant(const String& path) const {
     // make `start` a C string.
     *p = 0;
     // return json variant at `start`.
-    json = json.asObject().get<JsonVariant>(start);
+    json = json.as<JsonObject>().getMember<JsonVariant>(start);
     // advance to next path element.
     start = p + 1;
   }

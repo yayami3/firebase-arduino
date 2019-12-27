@@ -79,7 +79,7 @@ class FirebaseCloudMessaging {
   // Make the actual call to the backend.
   const FirebaseError SendPayload(const char* payload);
 
-  const void AddToJson(const FirebaseCloudMessage& message, JsonObject& json) const;
+  const void AddToJson(const FirebaseCloudMessage& message, DynamicJsonDocument doc) const;
 
   std::string auth_header_;
 };
