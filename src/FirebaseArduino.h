@@ -47,47 +47,47 @@ class FirebaseArduino {
    * \param value Integer value that you wish to append to the node.
    * \return The unique key of the new child node.
    */
-  String pushInt(const String& path, int value);
+  /* String pushInt(const String& path, int value); */
 
-  /**
-   * Appends the float value to the node at path.
-   * Equivalent to the REST API's POST.
-   * You should check success() after calling.
-   * \param path The path of the parent node.
-   * \param value Float value that you wish to append to the node.
-   * \return The unique key of the new child node.
-   */
-  String pushFloat(const String& path, float value);
+  /* /\** */
+  /*  * Appends the float value to the node at path. */
+  /*  * Equivalent to the REST API's POST. */
+  /*  * You should check success() after calling. */
+  /*  * \param path The path of the parent node. */
+  /*  * \param value Float value that you wish to append to the node. */
+  /*  * \return The unique key of the new child node. */
+  /*  *\/ */
+  /* String pushFloat(const String& path, float value); */
 
-  /**
-   * Appends the bool value to the node at path.
-   * Equivalent to the REST API's POST.
-   * You should check success() after calling.
-   * \param path The path of the parent node.
-   * \param value Bool value that you wish to append to the node.
-   * \return The unique key of the new child node.
-   */
-  String pushBool(const String& path, bool value);
+  /* /\** */
+  /*  * Appends the bool value to the node at path. */
+  /*  * Equivalent to the REST API's POST. */
+  /*  * You should check success() after calling. */
+  /*  * \param path The path of the parent node. */
+  /*  * \param value Bool value that you wish to append to the node. */
+  /*  * \return The unique key of the new child node. */
+  /*  *\/ */
+  /* String pushBool(const String& path, bool value); */
 
-  /**
-   * Appends the String value to the node at path.
-   * Equivalent to the REST API's POST.
-   * You should check success() after calling.
-   * \param path The path of the parent node.
-   * \param value String value that you wish to append to the node.
-   * \return The unique key of the new child node.
-   */
-  virtual String pushString(const String& path, const String& value);
+  /* /\** */
+  /*  * Appends the String value to the node at path. */
+  /*  * Equivalent to the REST API's POST. */
+  /*  * You should check success() after calling. */
+  /*  * \param path The path of the parent node. */
+  /*  * \param value String value that you wish to append to the node. */
+  /*  * \return The unique key of the new child node. */
+  /*  *\/ */
+  /* virtual String pushString(const String& path, const String& value); */
 
-  /**
-   * Appends the JSON data to the node at path.
-   * Equivalent to the REST API's POST.
-   * You should check success() after calling.
-   * \param path The path of the parent node.
-   * \param value JSON data that you wish to append to the node.
-   * \return The unique key of the new child node.
-   */
-  String push(const String& path, const JsonVariant& value);
+  /* /\** */
+  /*  * Appends the JSON data to the node at path. */
+  /*  * Equivalent to the REST API's POST. */
+  /*  * You should check success() after calling. */
+  /*  * \param path The path of the parent node. */
+  /*  * \param value JSON data that you wish to append to the node. */
+  /*  * \return The unique key of the new child node. */
+  /*  *\/ */
+  String push(const String& path, const String& value);
 
   /**
    * Writes the integer value to the node located at path equivalent to the
@@ -96,43 +96,45 @@ class FirebaseArduino {
    * \param path The path inside of your db to the node you wish to update.
    * \param value Integer value that you wish to write.
    */
-  void setInt(const String& path, int value);
+  /* void setInt(const String& path, int value); */
 
-  /**
-   * Writes the float value to the node located at path equivalent to the
-   * REST API's PUT.
-   * You should check success() after calling.
-   * \param path The path inside of your db to the node you wish to update.
-   * \param value Float value that you wish to write.
-   */
-  void setFloat(const String& path, float value);
+  /* /\** */
+  /*  * Writes the float value to the node located at path equivalent to the */
+  /*  * REST API's PUT. */
+  /*  * You should check success() after calling. */
+  /*  * \param path The path inside of your db to the node you wish to update. */
+  /*  * \param value Float value that you wish to write. */
+  /*  *\/ */
+  /* void setFloat(const String& path, float value); */
 
-  /**
-   * Writes the bool value to the node located at path equivalent to the
-   * REST API's PUT.
-   * You should check success() after calling.
-   * \param path The path inside of your db to the node you wish to update.
-   * \param value Bool value that you wish to write.
-   */
-  void setBool(const String& path, bool value);
+  /* /\** */
+  /*  * Writes the bool value to the node located at path equivalent to the */
+  /*  * REST API's PUT. */
+  /*  * You should check success() after calling. */
+  /*  * \param path The path inside of your db to the node you wish to update. */
+  /*  * \param value Bool value that you wish to write. */
+  /*  *\/ */
+  /* void setBool(const String& path, bool value); */
 
-  /**
-   * Writes the String value to the node located at path equivalent to the
-   * REST API's PUT.
-   * You should check success() after calling.
-   * \param path The path inside of your db to the node you wish to update.
-   * \param value String value that you wish to write.
-   */
-  virtual void setString(const String& path, const String& value);
+  /* /\** */
+  /*  * Writes the String value to the node located at path equivalent to the */
+  /*  * REST API's PUT. */
+  /*  * You should check success() after calling. */
+  /*  * \param path The path inside of your db to the node you wish to update. */
+  /*  * \param value String value that you wish to write. */
+  /*  *\/ */
+  /* virtual void setString(const String& path, const String& value); */
 
-  /**
-   * Writes the JSON data to the node located at path.
-   * Equivalent to the REST API's PUT.
-   * You should check success() after calling.
-   * \param path The path inside of your db to the node you wish to update.
-   * \param value JSON data that you wish to write.
-   */
-  void set(const String& path, const JsonVariant& value);
+  /* /\** */
+  /*  * Writes the JSON data to the node located at path. */
+  /*  * Equivalent to the REST API's PUT. */
+  /*  * You should check success() after calling. */
+  /*  * \param path The path inside of your db to the node you wish to update. */
+  /*  * \param value JSON data that you wish to write. */
+  /*  *\/ */
+  //template <typename T>
+  //void set(const String& path, const T value);
+  void set(const String& path, const String& value);
 
 
   /**

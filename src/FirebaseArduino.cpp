@@ -40,27 +40,57 @@ void FirebaseArduino::initRequest() {
   }
 }
 
-String FirebaseArduino::pushInt(const String& path, int value) {
-  return push(path, value);
-}
+// String FirebaseArduino::pushInt(const String& path, int value) {
+//   // allocate the memory for the document
+//   DynamicJsonDocument doc(1024);
 
-String FirebaseArduino::pushFloat(const String& path, float value) {
-  return push(path, value);
-}
+//   // create a variant
+//   JsonVariant variant = doc.to<JsonVariant>();
+//   variant.set(value);
+//   return push(path, variant);
+// }
 
-String FirebaseArduino::pushBool(const String& path, bool value) {
-  return push(path, value);
-}
+// String FirebaseArduino::pushFloat(const String& path, float value) {
+//   // allocate the memory for the document
+//   DynamicJsonDocument doc(1024);
 
-String FirebaseArduino::pushString(const String& path, const String& value) {
-  JsonVariant json(value.c_str());
-  return push(path, json);
-}
+//   // create a variant
+//   JsonVariant variant = doc.to<JsonVariant>();
+//   variant.set(value);
+//   return push(path, variant);
+// }
 
-String FirebaseArduino::push(const String& path, const JsonVariant& value) {
-  int size = measureJson(value)+1;
+// String FirebaseArduino::pushBool(const String& path, bool value) {
+//   // allocate the memory for the document
+//   DynamicJsonDocument doc(1024);
+
+//   // create a variant
+//   JsonVariant variant = doc.to<JsonVariant>();
+//   variant.set(value);
+
+//   return push(path, variant);
+// }
+
+// String FirebaseArduino::pushString(const String& path, const String& value) {
+//   //  JsonVariant json(value.c_str());
+//   // allocate the memory for the document
+//   DynamicJsonDocument doc(1024);
+
+//   // create a variant
+//   JsonVariant variant = doc.to<JsonVariant>();
+//   variant.set(value);
+
+//   return push(path, variant);
+// }
+
+String FirebaseArduino::push(const String& path, const String& value) {
+//   // allocate the memory for the document
+   DynamicJsonDocument doc(1024);
+   doc[path] = value;
+   
+  int size = measureJson(doc)+1;
   char * buf = new char[size];
-  serializeJson(value, buf, size);
+  serializeJson(doc, buf, size);
   initRequest();
   int status = req_.get()->sendRequest(host_, auth_, "POST", path.c_str(), buf);
   error_ = req_.get()->error();
@@ -69,32 +99,60 @@ String FirebaseArduino::push(const String& path, const JsonVariant& value) {
   return name;
 }
 
-void FirebaseArduino::setInt(const String& path, int value) {
-  set(path, value);
-}
+// void FirebaseArduino::setInt(const String& path, int value) {
+//   // allocate the memory for the document
+//   DynamicJsonDocument doc(1024);
 
-void FirebaseArduino::setFloat(const String& path, float value) {
-  set(path, value);
-}
+//   // create a variant
+//   JsonVariant variant = doc.to<JsonVariant>();
+//   variant.set(value);
+//   set(path, variant);
+// }
 
-void FirebaseArduino::setBool(const String& path, bool value) {
-  set(path, value);
-}
+// void FirebaseArduino::setFloat(const String& path, float value) {
+//   // allocate the memory for the document
+//   DynamicJsonDocument doc(1024);
 
-void FirebaseArduino::setString(const String& path, const String& value) {
-  JsonVariant json(value.c_str());
-  set(path, json);
-}
+//   // create a variant
+//   JsonVariant variant = doc.to<JsonVariant>();
+//   variant.set(value);
+//   set(path, variant);
+// }
 
-void FirebaseArduino::set(const String& path, const JsonVariant& value) {
-  int size = measureJson(value)+1;
+// void FirebaseArduino::setBool(const String& path, bool value) {
+//   // allocate the memory for the document
+//   DynamicJsonDocument doc(1024);
+
+//   // create a variant
+//   JsonVariant variant = doc.to<JsonVariant>();
+//   variant.set(value);
+//   set(path, variant);
+// }
+
+// void FirebaseArduino::setString(const String& path, const String& value) {
+//   // allocate the memory for the document
+//   DynamicJsonDocument doc(1024);
+
+//   // create a variant
+//   JsonVariant variant = doc.to<JsonVariant>();
+//   variant.set(value);
+//   set(path, variant);
+// }
+//template <typename T>    
+void FirebaseArduino::set(const String& path, const String& value) {
+//   // allocate the memory for the document
+  DynamicJsonDocument doc(1024);
+
+  doc[path] = value;
+  
+  int size = measureJson(doc)+1;
   char* buf= new char[size];
-  serializeJson(value, buf, size);
+  serializeJson(doc, buf, size);
   initRequest();
   req_.get()->sendRequest(host_, auth_, "PUT", path.c_str(), buf);
-  error_ = req_.get()->error();
+				error_ = req_.get()->error();
   delete buf;
-}
+  ;}
 
 void FirebaseArduino::getRequest(const String& path) {
   initRequest();
@@ -184,7 +242,9 @@ FirebaseObject FirebaseArduino::readEvent() {
   // the only supported format for JsonObject#set (it does not like the std::string of the test env)
   char *cstr = new char[type.length() + 1];
   strncpy(cstr, type.c_str(), type.length() + 1);
-  obj.getJsonVariant().as<JsonObject&>().set("type", cstr);
+
+  //obj.getJsonVariant().as<JsonObject&>().set("type", cstr);
+  obj.getJsonVariant().as<JsonObject>()["type"] = cstr;
   delete[] cstr;
   return obj;
 }

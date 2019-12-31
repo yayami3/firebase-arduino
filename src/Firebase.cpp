@@ -56,7 +56,7 @@ FirebaseCall::~FirebaseCall() {
   http_->end();
 }
 
-const JsonObject& FirebaseCall::json() {
+const StaticJsonDocument<1024> FirebaseCall::json() {
   //TODO(edcoyne): This is not efficient, we should do something smarter with
   //the buffers. kotl: Is this still valid?
   if (buffer_.get() == NULL) {
@@ -64,7 +64,9 @@ const JsonObject& FirebaseCall::json() {
   }
   //TODO
   //return buffer_.get()->parseObject(response().c_str());
-  return deserializeJson((*buffer_.get()), response().c_str());
+  
+  deserializeJson((*buffer_.get()), response().c_str());
+  return ((*buffer_.get()));
 }
 
 // FirebaseRequest

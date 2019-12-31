@@ -77,7 +77,7 @@ class FirebaseCall {
     return response_;
   }
 
-  const JsonObject& json();
+  const StaticJsonDocument<1024> json();
 
  protected:
   const std::shared_ptr<FirebaseHttpClient> http_;
