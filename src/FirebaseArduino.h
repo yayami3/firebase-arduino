@@ -136,7 +136,9 @@ class FirebaseArduino {
   void set(const String& path, const String& value);
 
   template <typename T>
-  void set_temp( const T path, const T value);
+  void set_temp(const String& a, T b);
+  
+  //void set_temp( T path, T value);
 
 
 

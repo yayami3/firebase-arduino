@@ -21,7 +21,7 @@
 FirebaseObject::FirebaseObject(const char* data) : data_{data} {
   buffer_.reset(new StaticJsonDocument<FIREBASE_JSONBUFFER_SIZE>);
   //json_ = buffer_.get()->parse(&data_[0]);
-  StaticJsonDocument doc(1024);
+  StaticJsonDocument<1024> doc;
   doc = (*buffer_.get());
   json_ = doc;
   DeserializationError error = deserializeJson(doc, &data_[0]);
@@ -84,7 +84,7 @@ JsonVariant FirebaseObject::getJsonVariant(const String& path) const {
   if (*start == '/') {
     start++;
   }
-  StaticJsonDocument json = json_;
+  StaticJsonDocument<1024> json = json_;
   while (start < end) {
     // TODO(proppy) split in a separate function.
     char* p = start;
@@ -97,7 +97,7 @@ JsonVariant FirebaseObject::getJsonVariant(const String& path) const {
     // advance to next path element.
     start = p + 1;
   }
-  return json;
+  return json.as<JsonVariant>();
 }
 
 bool FirebaseObject::failed() const {

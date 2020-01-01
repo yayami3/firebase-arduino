@@ -107,7 +107,7 @@ class FirebaseObject {
   private:
     String data_;
     std::shared_ptr<StaticJsonDocument<FIREBASE_JSONBUFFER_SIZE>> buffer_;
-    JsonVariant json_;
+    StaticJsonDocument<1024> json_;
     mutable String error_;
 };
 
