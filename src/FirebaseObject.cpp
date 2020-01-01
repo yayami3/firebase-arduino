@@ -21,8 +21,10 @@
 FirebaseObject::FirebaseObject(const char* data) : data_{data} {
   buffer_.reset(new StaticJsonDocument<FIREBASE_JSONBUFFER_SIZE>);
   //json_ = buffer_.get()->parse(&data_[0]);
-  //StaticJsonDocument doc(1024);
-  DeserializationError error = deserializeJson((*buffer_.get()), &data_[0]);
+  StaticJsonDocument doc(1024);
+  doc = (*buffer_.get());
+  json_ = doc;
+  DeserializationError error = deserializeJson(doc, &data_[0]);
   if(error) return;
   // TODO(proppy): find a way to check decoding error, tricky because
   // ArduinoJson doesn't surface error for variant parsing.
@@ -82,7 +84,7 @@ JsonVariant FirebaseObject::getJsonVariant(const String& path) const {
   if (*start == '/') {
     start++;
   }
-  JsonVariant json = json_;
+  StaticJsonDocument json = json_;
   while (start < end) {
     // TODO(proppy) split in a separate function.
     char* p = start;

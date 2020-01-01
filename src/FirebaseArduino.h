@@ -132,9 +132,12 @@ class FirebaseArduino {
   /*  * \param path The path inside of your db to the node you wish to update. */
   /*  * \param value JSON data that you wish to write. */
   /*  *\/ */
-  //template <typename T>
-  //void set(const String& path, const T value);
+    //void set(const T1 path, const T2 value);
   void set(const String& path, const String& value);
+
+  template <typename T>
+  void set_temp( const T path, const T value);
+
 
 
   /**
