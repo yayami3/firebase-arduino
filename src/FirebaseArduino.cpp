@@ -141,8 +141,19 @@ String FirebaseArduino::push(const String& path, const String& value) {
 // }
 
 template <typename T>
-void FirebaseArduino::set_temp(const String& a, T b){
-   // std::cout << b << " " << a << std::endl;
+void FirebaseArduino::set_temp(const String& path, T value){
+  DynamicJsonDocument doc(1024);
+
+  doc[path] = value;
+  
+  int size = measureJson(doc)+1;
+  char* buf= new char[size];
+  serializeJson(doc, buf, size);
+  initRequest();
+  req_.get()->sendRequest(host_, auth_, "PUT", path.c_str(), buf);
+  error_ = req_.get()->error();
+  delete buf;
+    //std::cout << b << " " << a << std::endl;
   }
 template void FirebaseArduino::set_temp<int>(const String&, int );
 template void FirebaseArduino::set_temp<double>(const String&, double );
@@ -169,6 +180,9 @@ void FirebaseArduino::set(const String& path, const String& value) {
 void FirebaseArduino::getRequest(const String& path) {
   initRequest();
   req_.get()->sendRequest(host_, auth_, "GET", path.c_str());
+  Serial.print("err");
+  Serial.print(req_.get()->error());
+  
   error_ = req_.get()->error();
 }
 
@@ -181,10 +195,14 @@ FirebaseObject FirebaseArduino::get(const String& path) {
 }
 
 int FirebaseArduino::getInt(const String& path) {
+ 
   getRequest(path);
+   Serial.print(failed());
   if (failed()) {
     return 0;
   }
+  Serial.println("koko");
+  Serial.println(req_.get()->response().c_str());
   return FirebaseObject(req_.get()->response().c_str()).getInt();
 }
 
